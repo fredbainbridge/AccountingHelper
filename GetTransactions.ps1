@@ -6,7 +6,7 @@ Import-Module .\fbBudget -Force
 
 $files = Get-ChildItem -Path $Dir -Filter *.csv
 $CapitalOne = "Transaction Date,Posted Date,Card No.,Description,Category,Debit,Credit"
-$Affinity = "Date,Description,Comments,Check Number,Amount,Balance"
+$Affinity = '"Date","Description","Comments","Check Number","Amount","Balance"'
 $Topline = '"Transaction ID","Posting Date","Effective Date","Transaction Type","Amount","Check Number","Reference Number","Description","Transaction Category","Type","Balance"'
 
 $transactions = @();
@@ -20,4 +20,6 @@ foreach($file in $files) {
         Default { $transactions += Get-WellsFargoTransactions -Path $file.FullName }
     }
 }
-$transactions
+$json = $transactions | ConvertTo-Json
+
+$json | Out-File -FilePath D:\apps\accounting\newtransactions.json -Force

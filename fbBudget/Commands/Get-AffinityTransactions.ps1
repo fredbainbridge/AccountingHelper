@@ -10,13 +10,8 @@ function Get-AffinityTransactions {
         $t.Date = $line.'Date'
         $t.Description = $line.Description
         $t.Detail = $line.'Check Number'
-        if($line.Amount.StartsWith("(")) {
-            $tmpAmount = $line.Amount.Trim("(").Trim(")").Trim("$")
-            $t.Amount = -1 * $tmpAmount
-        }
-        else {
-            $t.Amount = $line.Amount.Trim("$");
-        }
+        $t.Amount = $line.Amount -replace '\$',''
+        
         $transactions += $t
     }
     $transactions

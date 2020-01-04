@@ -13,9 +13,13 @@ namespace Accounting.Models
 
         }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Transaction>(entity =>
+           {
+               //entity.HasOne(t => t.)
+           });
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

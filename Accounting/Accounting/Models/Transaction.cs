@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Accounting.Models
 {
@@ -8,7 +9,12 @@ namespace Accounting.Models
         public DateTime Date { get; set; }
         public string Detail { get; set; }
         public string Description { get; set; }
-        public string Amount { get; set; }
+        public double Amount { get; set; }
         public string Bank { get; set; }
+        public int? CategoryID { get; set; }
+
+        [ForeignKey("CategoryID")]
+        [InverseProperty("Transactions")]
+        public virtual Category Category { get; set; }
     }
 }

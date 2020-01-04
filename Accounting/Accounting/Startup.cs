@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Accounting.Models;
 using Microsoft.EntityFrameworkCore;
+using Accounting.Repository;
 
 namespace Accounting
 {
@@ -28,6 +29,7 @@ namespace Accounting
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IAccounting, Repository.Accounting>();
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
                 services.AddDbContext<AccountingContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("azureConnection")));
