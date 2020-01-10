@@ -12,6 +12,9 @@ $Topline = '"Transaction ID","Posting Date","Effective Date","Transaction Type",
 $transactions = @();
 foreach($file in $files) {
     $content = Get-Content -Path $file.FullName
+    if($content.count -eq 1) {
+        continue
+    }
     $header = $content[0];
     switch ($header) {
         $CapitalOne { $transactions += Get-CapitalOneTransactions -Path $file.FullName}
@@ -23,3 +26,5 @@ foreach($file in $files) {
 $json = $transactions | ConvertTo-Json
 
 $json | Out-File -FilePath D:\apps\accounting\newtransactions.json -Force
+
+#Invoke-WebRequest -Uri https://localhost:6001/Accounting
