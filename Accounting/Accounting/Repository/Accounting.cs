@@ -39,9 +39,10 @@ namespace Accounting.Repository
                         if(!exists)
                         {
                             _dbContext.Transactions.Add(t);
+                            _dbContext.SaveChanges();
                         }
                     }
-                    _dbContext.SaveChanges();
+                    
                 }
             }
         }
