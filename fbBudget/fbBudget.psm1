@@ -10,3 +10,4 @@ class Transaction {
 . $PSScriptRoot\Commands\Get-ToplineTransactions.ps1
 . $PSScriptRoot\Commands\Get-WellsFargoTransactions.ps1
 . $PSScriptRoot\Commands\Get-AmazonTransactions.ps1
+. $PSScriptRoot\Commands\Get-CostCoTransactions.ps1

@@ -26,23 +26,35 @@ namespace Accounting.Repository
                 {
                     string json = r.ReadToEnd();
                     List<Transaction> items = JsonConvert.DeserializeObject<List<Transaction>>(json);
+                    if (items == null)
+                    {
+                        continue;
+                    }
                     foreach(Transaction t in items)
                     {
-                        //does it already exist?
-                        bool exists = _dbContext.Transactions.Where(b =>
-                           b.Bank.Equals(t.Bank) &&
-                           b.Amount == t.Amount &&
-                           b.Date.Equals(t.Date) &&
-                           b.Description.Equals(t.Description) &&
-                           b.Detail.Equals(t.Detail)
-                        ).Any();
+                        bool exists = false;
+                        if(t.Bank.Equals("Amazon"))
+                        {
+                           exists = _dbContext.Transactions.Where(b => b.Detail.Equals(t.Detail)).Any();
+                        }
+                        if(!exists)
+                        {
+                            exists = _dbContext.Transactions.Where(b =>
+                               b.Bank.Equals(t.Bank) &&
+                               b.Amount == t.Amount &&
+                               b.Date.Year.Equals(t.Date.Year) &&
+                               b.Date.Month.Equals(t.Date.Month) &&
+                               b.Date.Day.Equals(t.Date.Day) &&
+                               b.Description.Equals(t.Description) &&
+                               b.Detail.Equals(t.Detail)
+                            ).Any();
+                        }
                         if(!exists)
                         {
                             _dbContext.Transactions.Add(t);
                             _dbContext.SaveChanges();
                         }
                     }
-                    
                 }
             }
         }
