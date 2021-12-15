@@ -1,5 +1,5 @@
 param(
-    [string]$Dir = "C:\Users\FredBainbridge\Downloads"
+    [string]$Dir = "D:\Users\FredBainbridge\Downloads"
 )
 
 Import-Module .\fbBudget -Force
@@ -31,4 +31,4 @@ $json = $transactions | ConvertTo-Json
 
 $json | Out-File -FilePath D:\apps\accounting\newtransactions.json -Force
 
-Invoke-WebRequest -Uri https://localhost:6001/Accounting
+Invoke-WebRequest -Uri https://localhost:6001/Accounting -UseBasicParsing
