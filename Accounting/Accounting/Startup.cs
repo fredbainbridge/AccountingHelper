@@ -12,6 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Accounting.Models;
 using Microsoft.EntityFrameworkCore;
+
+
+
+
 using Accounting.Repository;
 
 namespace Accounting
@@ -28,14 +32,17 @@ namespace Accounting
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 40));
             services.AddControllers();
             services.AddScoped<IAccounting, Repository.Accounting>();
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
                 services.AddDbContext<AccountingContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("azureConnection")));
+                        options.UseMySql(Configuration.GetConnectionString("azureConnection"), serverVersion));
             else
                 services.AddDbContext<AccountingContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+                        options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), serverVersion));
+
 
         }
 
