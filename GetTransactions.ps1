@@ -1,12 +1,12 @@
 param(
-    [string]$Dir = "D:\Users\FredBainbridge\Downloads"
+    [string]$Dir = "/Users/fredbainbridge/Downloads"
 )
 
 Import-Module .\fbBudget -Force
 
 $files = Get-ChildItem -Path $Dir -Filter *.csv
 $CapitalOne = "Transaction Date,Posted Date,Card No.,Description,Category,Debit,Credit"
-$Affinity = '"Date","Description","Comments","Check Number","Amount","Balance"'
+$Affinity = 'Account ID,Transaction ID,Date,Description,Check Number,Category,Tags,Amount,Balance'
 $Topline = '"Transaction ID","Posting Date","Effective Date","Transaction Type","Amount","Check Number","Reference Number","Description","Transaction Category","Type","Balance","Memo","Extended Description"'
 $Amazon = 'Transaction Date,Posting Date,Reference Number,Amount,Description'
 $CostCo = 'Status,Date,Description,Debit,Credit,Member Name'
@@ -30,6 +30,6 @@ foreach($file in $files) {
 }
 $json = $transactions | ConvertTo-Json
 
-$json | Out-File -FilePath D:\apps\accounting\newtransactions.json -Force
+$json | Out-File -FilePath ~/Documents/newtransactions.json -Force
 
-Invoke-WebRequest -Uri https://localhost:6001/Accounting -UseBasicParsing
+Invoke-WebRequest -Uri https://localhost:6001/Accounting
