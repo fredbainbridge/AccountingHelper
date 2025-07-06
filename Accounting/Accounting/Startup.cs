@@ -40,10 +40,7 @@ namespace Accounting
                         options.UseMySql(Configuration.GetConnectionString("azureConnection"), serverVersion));
             else
                 services.AddDbContext<AccountingContext>(options =>
-
                         options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), serverVersion));
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

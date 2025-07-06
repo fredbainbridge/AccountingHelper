@@ -5,19 +5,22 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using Accounting.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Accounting.Repository
 {
     public class Accounting : IAccounting
     {
+        private readonly IConfiguration Configuration;
         private AccountingContext _dbContext;
-        public Accounting(AccountingContext accountingContext)
+        public Accounting(AccountingContext accountingContext, IConfiguration configuration)
         {
             _dbContext = accountingContext;
+            Configuration = configuration;
         }
         public void GatherTransaction()
         {
-            string path = @"D:\apps\accounting";
+            string path = Configuration["transactionPath"];
             DirectoryInfo di = new DirectoryInfo(path);
             FileInfo[] files = di.GetFiles("*.json");
             foreach(FileInfo file in files)
